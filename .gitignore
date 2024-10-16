@@ -1,0 +1,16 @@
+# Ignorer les fichiers temporaires du système
+.DS_Store
+Thumbs.db
+
+# Ignorer les dossiers de l'éditeur/de l'IDE
+.vscode/
+.idea/
+
+# Ignorer les fichiers de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorer les dossiers de build
+build/
+dist/

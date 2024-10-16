@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Webtoons Full Loader",
+  "description": "Fully loads pages on Webtoons.",
+  "version": "1.1",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.webtoons.com/*"],
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Webtoons Full Loader",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.webtoons.com/*"],
+      "js": ["scripts/contentScript.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png"
+  }
+}
