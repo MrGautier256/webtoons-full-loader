@@ -1,39 +1,53 @@
-// scripts/contentScript.js
-
-// Main function encapsulated to avoid variable conflicts
 (function () {
-  // Check if the extension is enabled
-  chrome.storage.sync.get(["enabled"], function (result) {
-    if (result.enabled === false) {
-      // If the extension is disabled, do nothing
-      return;
-    }
-
-    // Add an event listener to detect when the page is fully loaded
-    window.addEventListener("load", function () {
-      // Initialize variables
-      let lastHeight = document.body.scrollHeight;
-
-      // Function to scroll to the bottom of the page
-      function scrollToBottom() {
-        window.scrollTo(0, document.body.scrollHeight);
+  function applyDarkMode(isEnabled) {
+    const existingStyle = document.getElementById("dark-mode-style");
+    if (isEnabled) {
+      if (!existingStyle) {
+        const darkModeStyle = document.createElement("style");
+        darkModeStyle.id = "dark-mode-style";
+        darkModeStyle.textContent = `
+          body, .viewer_lst, .viewer_img img {
+            background-color: #121212 !important;
+            color: #e0e0e0 !important;
+          }
+          .viewer_img img {
+            filter: brightness(80%) contrast(110%);
+          }
+        `;
+        document.head.appendChild(darkModeStyle);
       }
+    } else if (existingStyle) {
+      existingStyle.remove();
+    }
+  }
 
-      // Scroll the page to load dynamic content
+  function applyAutoLoad(isEnabled) {
+    if (isEnabled) {
+      let lastHeight = document.body.scrollHeight;
       let timer = setInterval(function () {
-        scrollToBottom();
-
-        // Check if new content has been loaded
+        window.scrollTo(0, document.body.scrollHeight);
         let newHeight = document.body.scrollHeight;
         if (newHeight > lastHeight) {
           lastHeight = newHeight;
         } else {
-          // If no new content, stop scrolling
           clearInterval(timer);
-          // Scroll back to the top of the page
           window.scrollTo(0, 0);
         }
-      }, 500); // Reduced interval for faster processing
-    });
+      }, 500);
+    }
+  }
+
+  chrome.storage.sync.get(["autoLoad", "darkMode"], function (result) {
+    applyAutoLoad(result.autoLoad !== false);
+    applyDarkMode(result.darkMode === true);
+  });
+
+  chrome.storage.onChanged.addListener(function (changes) {
+    if (changes.autoLoad) {
+      applyAutoLoad(changes.autoLoad.newValue);
+    }
+    if (changes.darkMode) {
+      applyDarkMode(changes.darkMode.newValue);
+    }
   });
 })();

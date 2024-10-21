@@ -1,16 +1,17 @@
-// scripts/popup.js
+const toggleAutoLoad = document.getElementById("toggleAutoLoad");
+const toggleDarkMode = document.getElementById("toggleDarkMode");
 
-const toggle = document.getElementById("toggleExtension");
-const statusText = document.getElementById("status");
-
-chrome.storage.sync.get(["enabled"], function (result) {
-  const isEnabled = result.enabled !== undefined ? result.enabled : true;
-  toggle.checked = isEnabled;
-  statusText.textContent = isEnabled ? "Enabled" : "Disabled";
+chrome.storage.sync.get(["autoLoad", "darkMode"], function (result) {
+  toggleAutoLoad.checked =
+    result.autoLoad !== undefined ? result.autoLoad : true;
+  toggleDarkMode.checked =
+    result.darkMode !== undefined ? result.darkMode : false;
 });
 
-toggle.addEventListener("change", function () {
-  const isEnabled = toggle.checked;
-  chrome.storage.sync.set({ enabled: isEnabled });
-  statusText.textContent = isEnabled ? "Enabled" : "Disabled";
+toggleAutoLoad.addEventListener("change", function () {
+  chrome.storage.sync.set({ autoLoad: toggleAutoLoad.checked });
+});
+
+toggleDarkMode.addEventListener("change", function () {
+  chrome.storage.sync.set({ darkMode: toggleDarkMode.checked });
 });

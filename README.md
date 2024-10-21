@@ -4,13 +4,13 @@
 
 ### Description
 
-**Webtoons Full Loader** is a browser extension for Chromium-based browsers (like Chrome and Opera) that fully loads Webtoons pages without requiring manual scrolling. This enhances the reading experience by eliminating the wait time when scrolling.
+**Webtoons Full Loader** is a browser extension for Chromium-based browsers (like Chrome and Opera) that enhances your reading experience on Webtoon. It preloads entire chapters automatically and includes a Dark Mode feature to reduce eye strain during reading.
 
 ### Features
 
-- **Enable/Disable**: You can easily enable or disable the extension via the extension popup.
-- **Optimized Loading**: The initial page is displayed quickly, and the remaining content is loaded in the background.
-- **Simple Interface**: A minimal user interface for easy use.
+- **Auto Load**: Automatically loads all Webtoon chapter content without requiring scrolling.
+- **Dark Mode**: Applies a dark theme to the Webtoons interface for a more comfortable reading experience, especially at night.
+- **Enable/Disable Features Independently**: You can easily enable or disable **Auto Load** and **Dark Mode** independently via the extension's popup.
 
 ### Installation
 
@@ -29,26 +29,29 @@
 
 ### Usage
 
-- **Enable/Disable the Extension**:
+- **Enable/Disable Features**:
 
   - Click on the extension icon in the browser toolbar.
-  - Use the checkbox to enable or disable the extension.
+  - Use the sliders to enable or disable **Auto Load** and **Dark Mode** independently.
 
 - **Reading on Webtoons**:
   - Visit `https://www.webtoons.com/` and open a chapter.
-  - The page will automatically load all the content without manual scrolling.
+  - If **Auto Load** is enabled, the page will automatically load all the content without manual scrolling.
+  - If **Dark Mode** is enabled, a dark theme will be applied immediately.
+
+---
 
 ## Français
 
 ### Description
 
-**Webtoons Full Loader** est une extension de navigateur pour les navigateurs basés sur Chromium (comme Chrome et Opera) qui permet de charger entièrement les pages de Webtoons sans avoir à faire défiler manuellement. Cela améliore l'expérience de lecture en éliminant les temps d'attente lors du défilement.
+**Webtoons Full Loader** est une extension de navigateur pour les navigateurs basés sur Chromium (comme Chrome et Opera) qui améliore votre expérience de lecture sur Webtoon. Elle précharge automatiquement l'intégralité des chapitres et offre une fonctionnalité de mode sombre pour réduire la fatigue oculaire.
 
 ### Fonctionnalités
 
-- **Activer/Désactiver** : Vous pouvez facilement activer ou désactiver l'extension via le popup de l'extension.
-- **Chargement Optimisé** : La page initiale s'affiche rapidement, et le contenu restant se charge en arrière-plan.
-- **Interface Simple** : Une interface utilisateur minimale pour une utilisation facile.
+- **Chargement Automatique** : Charge automatiquement tout le contenu d'un chapitre Webtoon sans défilement manuel.
+- **Mode Sombre** : Applique un thème sombre à l'interface de Webtoons pour une lecture plus confortable, surtout la nuit.
+- **Activation Indépendante** : Vous pouvez activer ou désactiver le **Chargement Automatique** et le **Mode Sombre** indépendamment via le popup de l'extension.
 
 ### Installation
 
@@ -67,11 +70,12 @@
 
 ### Utilisation
 
-- **Activer/Désactiver l'extension** :
+- **Activer/Désactiver les Fonctionnalités** :
 
   - Cliquez sur l'icône de l'extension dans la barre d'outils du navigateur.
-  - Utilisez la case à cocher pour activer ou désactiver l'extension.
+  - Utilisez les interrupteurs pour activer ou désactiver indépendamment le **Chargement Automatique** et le **Mode Sombre**.
 
 - **Lecture sur Webtoons** :
   - Rendez-vous sur `https://www.webtoons.com/` et ouvrez un chapitre.
-  - La page se chargera automatiquement sans nécessiter de défilement manuel.
+  - Si le **Chargement Automatique** est activé, la page se chargera automatiquement.
+  - Si le **Mode Sombre** est activé, un thème sombre sera appliqué immédiatement.
