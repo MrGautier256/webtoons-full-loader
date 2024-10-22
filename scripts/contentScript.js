@@ -6,7 +6,7 @@
         const darkModeStyle = document.createElement("style");
         darkModeStyle.id = "dark-mode-style";
         darkModeStyle.textContent = `
-          body, .viewer_lst, .viewer_img img, .comment_section, .suggestions_section, .episode_area, footer {
+          body, .viewer_lst, .viewer_img img, .comment_section, .suggestions_section, .episode_area, #notice_detail, footer {
             background-color: #121212 !important;
             color: #e0e0e0 !important;
           }
@@ -23,7 +23,7 @@
             color: #fff !important;
           }
           /* Forcer la couleur du texte dans les sections commentaires et suggestions */
-          .comment_area, .comment_section, .suggestions_section, .comment_section * {
+          .comment_area, .comment_section, .suggestions_section, .comment_section, .wcc_Editor__root * {
             color: #e0e0e0 !important;
             background-color: #1f1f1f !important;
           }
@@ -70,6 +70,10 @@
           }
           .notice_area .date {
             color: #aaaaaa !important; /* Couleur de la date dans la notice */
+          }
+          /* Style pour .day_info et .dsc_encourage en mode sombre */
+          .day_info, .dsc_encourage {
+            color: #ffffff !important; /* Texte blanc */
           }
         `;
         document.head.appendChild(darkModeStyle);
