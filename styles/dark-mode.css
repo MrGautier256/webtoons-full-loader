@@ -87,3 +87,67 @@ button {
 .dsc_encourage {
   color: #ffffff !important; /* Texte blanc */
 }
+
+/* Nouveau style pour les réponses de commentaires en mode sombre */
+.wcc_ReplyFolder__root,
+.wcc_CommentItem__root,
+.wcc_CommentItem__inside,
+.wcc_CommentHeader__root,
+.wcc_CommentBody__root,
+.wcc_TextContent__root,
+.wcc_CommentReaction__root,
+.wcc_Editor__root,
+.wcc_ReplyUnfold__root,
+.wcc_CommentOptionMenu__trigger,
+.wcc_CommentMore__more,
+.wcc_Editor__spoilerWrapper,
+.ArticleEditor_Editor_module__editor {
+  background-color: #1f1f1f !important; /* Fond sombre */
+  color: #e0e0e0 !important; /* Texte clair */
+  border-color: #333 !important; /* Couleur des bordures */
+}
+
+.wcc_CommentHeader__name,
+.wcc_CommentHeader__createdAt,
+.wcc_CommentMore__more,
+.wcc_ReplyUnfold__unfold,
+.wcc_CommentOptionMenu__trigger,
+.wcc_TextContent__content {
+  color: #e0e0e0 !important; /* Texte clair */
+}
+
+.wcc_Button__root,
+.wcc_CommentReaction__action {
+  background-color: #333 !important; /* Boutons sombres */
+  color: #fff !important; /* Texte des boutons en blanc */
+}
+
+.wcc_ArrowDownIcon__root,
+.wcc_ArrowUp__root {
+  stroke: #e0e0e0 !important; /* Couleur des icônes de flèche en mode sombre */
+}
+
+.wcc_CommentItem__replied .wcc_CommentBody__root {
+  background-color: #2a2a2a !important; /* Légère variation pour les commentaires imbriqués */
+}
+
+.wcc_Editor__bottomLeftCornerIcon {
+  stroke: #666 !important; /* Couleur des icônes de coin pour s'adapter au mode sombre */
+}
+
+/* Styles pour les états de bouton (survol, focus) */
+.wcc_Button__root:hover,
+.wcc_Button__root:focus {
+  background-color: #444 !important;
+}
+
+.wcc_CommentReaction__action:hover,
+.wcc_CommentReaction__action:focus {
+  background-color: #444 !important;
+}
+
+/* Style pour les liens dans les commentaires */
+.wcc_TextContent__content a,
+.wcc_TextContent__content a:visited {
+  color: #bb86fc !important; /* Couleur des liens en mode sombre */
+}
