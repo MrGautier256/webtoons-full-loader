@@ -5,85 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Webtoons Full Loader</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
-      min-width: 220px;
-      padding: 20px;
-      border-radius: 8px;
-    }
-
-    .switch-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: 0.4s;
-      border-radius: 24px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 20px;
-      width: 20px;
-      left: 2px;
-      bottom: 2px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-    }
-
-    input:checked+.slider {
-      background-color: #4caf50;
-    }
-
-    input:checked+.slider:before {
-      transform: translateX(26px);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      body {
-        background-color: #222;
-        color: #eee;
-      }
-
-      .slider {
-        background-color: #777;
-      }
-
-      input:checked+.slider {
-        background-color: #0a7f12;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -103,7 +24,115 @@
     </label>
   </div>
 
+  <div class="brightness-container">
+    <label>Image brightness</label>
+    <input type="range" id="brightnessSlider" min="25" max="125" value="100">
+    <span id="brightnessValue">100%</span>
+  </div>
+
   <script src="../scripts/popup.js"></script>
 </body>
+
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    min-width: 275px;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  input:checked+.slider {
+    background-color: #4caf50;
+  }
+
+  input:checked+.slider:before {
+    transform: translateX(26px);
+  }
+
+  /* Style for the brightness slider */
+  .brightness-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  #brightnessSlider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    outline: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+
+  #brightnessSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  #brightnessValue {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+</style>
 
 </html>

@@ -3,7 +3,7 @@ manifest.json
   "manifest_version": 3,
   "name": "Webtoons Full Loader",
   "description": "Fully loads pages on Webtoons.",
-  "version": "1.3",
+  "version": "1.6",
   "permissions": ["storage"],
   "host_permissions": ["https://www.webtoons.com/*"],
   "action": {
@@ -206,85 +206,6 @@ popup\popup.html
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Webtoons Full Loader</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
-      min-width: 220px;
-      padding: 20px;
-      border-radius: 8px;
-    }
-
-    .switch-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: 0.4s;
-      border-radius: 24px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 20px;
-      width: 20px;
-      left: 2px;
-      bottom: 2px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-    }
-
-    input:checked+.slider {
-      background-color: #4caf50;
-    }
-
-    input:checked+.slider:before {
-      transform: translateX(26px);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      body {
-        background-color: #222;
-        color: #eee;
-      }
-
-      .slider {
-        background-color: #777;
-      }
-
-      input:checked+.slider {
-        background-color: #0a7f12;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -304,21 +225,130 @@ popup\popup.html
     </label>
   </div>
 
+  <div class="brightness-container">
+    <label>Image brightness</label>
+    <input type="range" id="brightnessSlider" min="25" max="125" value="100">
+    <span id="brightnessValue">100%</span>
+  </div>
+
   <script src="../scripts/popup.js"></script>
 </body>
+
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    min-width: 275px;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  input:checked+.slider {
+    background-color: #4caf50;
+  }
+
+  input:checked+.slider:before {
+    transform: translateX(26px);
+  }
+
+  /* Style for the brightness slider */
+  .brightness-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  #brightnessSlider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    outline: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+
+  #brightnessSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  #brightnessValue {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+</style>
 
 </html>
 
 scripts\contentScript.js
 (function () {
+  // Fonction pour appliquer le mode sombre
   function applyDarkMode(isEnabled) {
-    const existingLink = document.getElementById("dark-mode-link");
+    let existingLink = document.getElementById("dark-mode-link");
     if (isEnabled) {
       if (!existingLink) {
         const link = document.createElement("link");
         link.id = "dark-mode-link";
         link.rel = "stylesheet";
-        link.href = chrome.runtime.getURL("styles/dark-mode.css"); // chemin vers votre fichier CSS
+        link.href = chrome.runtime.getURL("styles/dark-mode.css"); // Chemin vers ton fichier CSS
         document.head.appendChild(link);
       }
     } else if (existingLink) {
@@ -326,35 +356,71 @@ scripts\contentScript.js
     }
   }
 
+  // Fonction pour appliquer la luminosité aux images
+  function applyBrightness(brightness) {
+    const images = document.querySelectorAll(".viewer_img img");
+    images.forEach((image) => {
+      image.style.filter = `brightness(${brightness}%)`;
+    });
+  }
+
+  // Fonction pour précharger toutes les images de la page avec un délai
+  function preloadImages() {
+    const images = document.querySelectorAll("img._images"); // Sélectionne toutes les images avec la classe _images
+    images.forEach((image, index) => {
+      const src = image.getAttribute("data-url"); // Récupère l'URL réelle de l'image
+      if (src) {
+        // Précharge progressivement les images avec un léger délai entre chaque
+        setTimeout(() => {
+          const img = new Image();
+          img.src = src; // Force le préchargement de l'image
+        }, index * 500); // Chaque image est chargée avec un intervalle de 500ms
+      }
+    });
+  }
+
+  // Fonction pour auto-charger la page
   function applyAutoLoad(isEnabled) {
-    console.log("Début du chargement");
     if (isEnabled) {
       let lastHeight = document.body.scrollHeight;
       let timer = setInterval(function () {
-        window.scrollTo(0, document.body.scrollHeight);
+        window.scrollTo(0, document.body.scrollHeight); // Défiler vers le bas
         let newHeight = document.body.scrollHeight;
         if (newHeight > lastHeight) {
           lastHeight = newHeight;
         } else {
           clearInterval(timer);
-          window.scrollTo(0, 0);
+          window.scrollTo(0, 0); // Remonter en haut de la page après le chargement
         }
       }, 500);
     }
-    console.log("Fin du chargement");
   }
 
-  chrome.storage.sync.get(["autoLoad", "darkMode"], function (result) {
-    applyAutoLoad(result.autoLoad !== false);
-    applyDarkMode(result.darkMode === true);
-  });
+  // Récupère les préférences depuis chrome.storage et applique les fonctionnalités
+  chrome.storage.sync.get(
+    ["autoLoad", "darkMode", "brightness"],
+    function (result) {
+      applyAutoLoad(result.autoLoad !== false); // Active l'auto-load si la préférence est activée
+      applyDarkMode(result.darkMode === true); // Applique le mode sombre si activé
+      applyBrightness(result.brightness || 100); // Applique la luminosité aux images
 
+      // Délai avant de commencer à précharger les images pour permettre à l'utilisateur de lire le début
+      setTimeout(() => {
+        preloadImages(); // Précharge les images après un délai de 2 secondes
+      }, 2000);
+    }
+  );
+
+  // Écoute les changements dans chrome.storage pour réagir aux ajustements en direct
   chrome.storage.onChanged.addListener(function (changes) {
     if (changes.autoLoad) {
       applyAutoLoad(changes.autoLoad.newValue);
     }
     if (changes.darkMode) {
       applyDarkMode(changes.darkMode.newValue);
+    }
+    if (changes.brightness) {
+      applyBrightness(changes.brightness.newValue);
     }
   });
 })();
@@ -363,13 +429,21 @@ scripts\contentScript.js
 scripts\popup.js
 const toggleAutoLoad = document.getElementById("toggleAutoLoad");
 const toggleDarkMode = document.getElementById("toggleDarkMode");
+const brightnessSlider = document.getElementById("brightnessSlider");
+const brightnessValue = document.getElementById("brightnessValue");
 
-chrome.storage.sync.get(["autoLoad", "darkMode"], function (result) {
-  toggleAutoLoad.checked =
-    result.autoLoad !== undefined ? result.autoLoad : true;
-  toggleDarkMode.checked =
-    result.darkMode !== undefined ? result.darkMode : false;
-});
+chrome.storage.sync.get(
+  ["autoLoad", "darkMode", "brightness"],
+  function (result) {
+    toggleAutoLoad.checked =
+      result.autoLoad !== undefined ? result.autoLoad : true;
+    toggleDarkMode.checked =
+      result.darkMode !== undefined ? result.darkMode : false;
+    brightnessSlider.value =
+      result.brightness !== undefined ? result.brightness : 100;
+    brightnessValue.textContent = `${brightnessSlider.value}%`; 
+  }
+);
 
 toggleAutoLoad.addEventListener("change", function () {
   chrome.storage.sync.set({ autoLoad: toggleAutoLoad.checked });
@@ -377,6 +451,12 @@ toggleAutoLoad.addEventListener("change", function () {
 
 toggleDarkMode.addEventListener("change", function () {
   chrome.storage.sync.set({ darkMode: toggleDarkMode.checked });
+});
+
+brightnessSlider.addEventListener("input", function () {
+  const brightness = brightnessSlider.value;
+  chrome.storage.sync.set({ brightness }); 
+  brightnessValue.textContent = `${brightness}%`; 
 });
 
 
@@ -393,7 +473,7 @@ footer {
   color: #e0e0e0 !important;
 }
 .viewer_img img {
-  filter: brightness(80%) contrast(110%);
+  filter: none;
 }
 /* Correction de la couleur des liens */
 a,

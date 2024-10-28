@@ -10,7 +10,7 @@ footer {
   color: #e0e0e0 !important;
 }
 .viewer_img img {
-  filter: brightness(80%) contrast(110%);
+  filter: none;
 }
 /* Correction de la couleur des liens */
 a,
