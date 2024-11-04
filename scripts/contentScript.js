@@ -1,4 +1,9 @@
 (function () {
+  // Fonction pour vérifier si on est sur une page de lecture
+  function isReadingPage() {
+    return document.getElementById("_viewerBox") !== null;
+  }
+
   // Fonction pour appliquer le mode sombre
   function applyDarkMode(isEnabled) {
     let existingLink = document.getElementById("dark-mode-link");
@@ -59,27 +64,33 @@
   chrome.storage.sync.get(
     ["autoLoad", "darkMode", "brightness"],
     function (result) {
-      applyAutoLoad(result.autoLoad !== false); // Active l'auto-load si la préférence est activée
-      applyDarkMode(result.darkMode === true); // Applique le mode sombre si activé
-      applyBrightness(result.brightness || 100); // Applique la luminosité aux images
+      if (isReadingPage()) {
+        // Vérifie si c'est une page de lecture
+        applyAutoLoad(result.autoLoad !== false); // Active l'auto-load si la préférence est activée
+        applyDarkMode(result.darkMode === true); // Applique le mode sombre si activé
+        applyBrightness(result.brightness || 100); // Applique la luminosité aux images
 
-      // Délai avant de commencer à précharger les images pour permettre à l'utilisateur de lire le début
-      setTimeout(() => {
-        preloadImages(); // Précharge les images après un délai de 2 secondes
-      }, 2000);
+        // Délai avant de commencer à précharger les images pour permettre à l'utilisateur de lire le début
+        setTimeout(() => {
+          preloadImages(); // Précharge les images après un délai de 2 secondes
+        }, 2000);
+      }
     }
   );
 
   // Écoute les changements dans chrome.storage pour réagir aux ajustements en direct
   chrome.storage.onChanged.addListener(function (changes) {
-    if (changes.autoLoad) {
-      applyAutoLoad(changes.autoLoad.newValue);
-    }
-    if (changes.darkMode) {
-      applyDarkMode(changes.darkMode.newValue);
-    }
-    if (changes.brightness) {
-      applyBrightness(changes.brightness.newValue);
+    if (isReadingPage()) {
+      // Vérifie si c'est une page de lecture
+      if (changes.autoLoad) {
+        applyAutoLoad(changes.autoLoad.newValue);
+      }
+      if (changes.darkMode) {
+        applyDarkMode(changes.darkMode.newValue);
+      }
+      if (changes.brightness) {
+        applyBrightness(changes.brightness.newValue);
+      }
     }
   });
 })();
